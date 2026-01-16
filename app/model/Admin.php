@@ -1,0 +1,34 @@
+<?php
+    namespace APP\model;
+    use APP\model\Utilisateur;
+
+    class Admin extends Utilisateur {
+        static function bloquerClient($pdo, $idClient){
+            try{
+                $sql = "UPDATE utilisateurs 
+                        SET statut = 0
+                        WHERE id_user = ?";
+
+                $stmt = $pdo->prepare($sql);
+
+                $succes = $stmt->execute([$idClient]);
+            }catch(Exception $e){
+                echo "La mise à jour a échoué.";
+            }
+        }
+
+        static function debloquerClient($pdo, $idClient){
+            try{
+                $sql = "UPDATE utilisateurs 
+                        SET statut = 1
+                        WHERE id_user = ?";
+
+                $stmt = $pdo->prepare($sql);
+
+                $succes = $stmt->execute([$idClient]);
+            }catch(Exception $e){
+                echo "La mise à jour a échoué.";
+            }
+        }
+    }
+?>
